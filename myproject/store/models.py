@@ -16,10 +16,10 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     def save(self, *args, **kwargs):
-        is_new = self.pk is None  # Проверяем, новый ли это товар
+        is_new = self.pk is None
         super().save(*args, **kwargs)
         if is_new:
-            log_new_product.delay(self.id)  # Вызываем фоновую задачу
+            log_new_product.delay(self.id)
 
 
     def __str__(self):
